@@ -3,7 +3,7 @@ import { dispatchNotification } from './notificationReducer'
 
 const initialState = {
     username: undefined,
-    name: undefined,
+    admin: undefined,
     token : ""
 }
 
@@ -11,13 +11,13 @@ const reducer = (store = initialState, action) => {
     if (action.type === 'LOGIN') {
         const userInfo = {
             username: action.username,
-            token: action.token,
-            name: action.name
+            admin: action.admin,
+            token: action.token
         }
         window.localStorage.setItem('loggedUser', JSON.stringify(userInfo))
         return {
             username: action.username,
-            name: action.name,
+            admin: action.admin,
             token: action.token
         }
     }
@@ -25,7 +25,7 @@ const reducer = (store = initialState, action) => {
         window.localStorage.removeItem('loggedUser')
         return {
             username: undefined,
-            name: undefined,
+            admin: undefined,
             token: ""
         }
     }
@@ -36,14 +36,13 @@ export const login = (credentials) => {
     return async (dispatch) => {
         try {
             const response = await loginService.login(credentials)
-            console.log("response",response)
             dispatch({
                 type: 'LOGIN',
                 username: response.username,
-                name: response.name,
+                admin: response.admin,
                 token: response.token
             })
-            const message = 'Welcome back ' + response.name + '!'
+            const message = 'Welcome back ' + response.username + '!'
             dispatchNotification(dispatch, message)
         }
         catch(error) {
@@ -68,7 +67,7 @@ export const initCurrentUser = () => {
           dispatch({
               type: 'LOGIN',
               username: credentials.username,
-              name: credentials.name,
+              admin: credentials.admin,
               token: credentials.token
           })
         }

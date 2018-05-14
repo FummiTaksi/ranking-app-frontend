@@ -1,8 +1,17 @@
 import React from 'react'
 import { HashRouter as Router, Route, Link } from 'react-router-dom'
 import SignInForm from './signin/SignInForm'
+import Notification from './notification/Notification'
+import FileUpload from './upload/FileUpload'
+import {logout, initCurrentUser} from '../reducers/loginReducer'
+import { connect } from 'react-redux'
 
 class RankingApp extends React.Component {
+
+
+    componentDidMount() {
+      this.props.initCurrentUser()
+    }
 
 
     viewForGuest() {
@@ -18,8 +27,31 @@ class RankingApp extends React.Component {
                         <Route exact path="/signin" render={() => <SignInForm/>} />
                      </div>        
                 </Router>       
+                <Notification/>
+
             </div>
         )
+    }
+
+    viewForSignedInUser() {
+        return (
+            <div>
+                <Router>
+                    <div>
+                      <div>
+                        <Link to="/">Home</Link> &nbsp;
+                        <Link to="/upload"> Create new ranking</Link> &nbsp;
+                        You are signed in as {this.props.credentials.username} &nbsp;
+                        <button onClick = {() => this.props.logout()}>Logout</button>
+                      </div>
+                        <Route exact path="/" render={() => this.HomePage()} />
+                        <Route exact path="/upload" render={() => <FileUpload/>} />
+                     </div>        
+                </Router>       
+                <Notification/>
+            </div>
+        )
+
     }
 
     HomePage() {
@@ -29,12 +61,30 @@ class RankingApp extends React.Component {
     }
 
     render() {
+        const username = this.props.credentials.username
         return (
             <div>
-              {this.viewForGuest()}
+              {username && this.viewForSignedInUser()}  
+              {!username && this.viewForGuest()}
             </div>
         )
     }
 }
 
-export default RankingApp
+const mapStateToProps = (state) => {
+    return {
+        credentials: state.login
+    }
+}
+
+const mapDispatchToProps = {
+    logout,
+    initCurrentUser
+}
+
+const ConnectedRankingApp = connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(RankingApp)
+
+export default ConnectedRankingApp
