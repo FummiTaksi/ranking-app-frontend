@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Dropzone from 'react-dropzone'
 
-class FileUpload extends React.Component {
+class RankingForm extends React.Component {
 
     constructor() {
         super()
@@ -96,6 +96,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-const connectedFileUpload = connect(mapStateToProps)(FileUpload)
+const connectedRankingForm = connect(mapStateToProps)(RankingForm)
 
-export default connectedFileUpload
+export default connectedRankingForm

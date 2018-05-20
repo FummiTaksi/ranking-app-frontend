@@ -2,7 +2,7 @@ import React from 'react'
 import { HashRouter as Router, Route, Link } from 'react-router-dom'
 import SignInForm from './signin/SignInForm'
 import Notification from './notification/Notification'
-import FileUpload from './upload/FileUpload'
+import RankingForm from './ranking/RankingForm'
 import {logout, initCurrentUser} from '../reducers/loginReducer'
 import { connect } from 'react-redux'
 
@@ -45,7 +45,7 @@ class RankingApp extends React.Component {
                         <button onClick = {() => this.props.logout()}>Logout</button>
                       </div>
                         <Route exact path="/" render={() => this.HomePage()} />
-                        <Route exact path="/upload" render={() => <FileUpload/>} />
+                        <Route exact path="/upload" render={() => <RankingForm/>} />
                      </div>        
                 </Router>       
                 <Notification/>
