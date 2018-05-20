@@ -1,23 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Dropzone from 'react-dropzone'
+import { createRanking } from '../../reducers/rankingReducer'
+import Input from '../signin/Input'
 
 class RankingForm extends React.Component {
 
     constructor() {
         super()
         this.state = {
-            file: undefined
+            rankingFile: undefined,
+            rankingName: ''
         }
     }
 
 
     onDrop = (approved, rejected) => {
-        console.log('approved', approved)
         const droppedFile = approved[0]
-        console.log('DROPPED FILE', droppedFile)
         this.setState({
-            file: droppedFile
+            rankingFile: droppedFile
         })
     }
 
@@ -44,19 +45,47 @@ class RankingForm extends React.Component {
     }
 
     renderDroppedFileName() {
-      if (this.state.file) {
+      if (this.state.rankingFile) {
         return (
-            <p>Filename: {this.state.file.name}</p>
+            <p>Filename: {this.state.rankingFile.name}</p>
         )
       }
     }
 
     renderUploadForm() {
-        if (this.state.file) {
+        if (this.state.rankingFile) {
             return (
-                <button onClick = {() => this.sendFile()}>Upload </button>
+                <form onSubmit={this.sendFile}>
+                  <Input
+                    type = "input"
+                    text = "Name of ranking:" 
+                    name = "rankingName"
+                    value = {this.state.rankingName}
+                    onChange = {this.handleFormChange}
+                   />  
+                  <button type="submit">Upload</button>
+                </form>
             )
         }
+    }
+
+    sendFile = (e) => {
+        e.preventDefault()
+        const credentials = {
+            file: this.state.rankingFile,
+            name: this.state.rankingName
+        }
+        this.props.createRanking(credentials)
+        this.setState({
+            rankingFile: undefined,
+            rankingName: ''
+        })
+    }
+
+    handleFormChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
     renderFileUploadingForm() {
@@ -68,14 +97,6 @@ class RankingForm extends React.Component {
             </div>
         )
     }
-
-    sendFile() {
-        console.log('SENDING FILE', this.state.file)
-        this.setState({
-            file: undefined
-        })
-    }
-
 
 
     render() {
@@ -90,12 +111,15 @@ class RankingForm extends React.Component {
 
 }
 
+const mapDispatchToProps = {
+    createRanking
+}
 const mapStateToProps = (state) => {
     return {
         credentials: state.login
     }
 }
 
-const connectedRankingForm = connect(mapStateToProps)(RankingForm)
+const connectedRankingForm = connect(mapStateToProps, mapDispatchToProps)(RankingForm)
 
 export default connectedRankingForm
