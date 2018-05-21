@@ -9,7 +9,8 @@ class RankingForm extends React.Component {
     constructor() {
         super()
         this.state = {
-            rankingFile: undefined,
+            rankingFileBase64: undefined,
+            rankingFileName: '',
             rankingName: ''
         }
     }
@@ -17,9 +18,15 @@ class RankingForm extends React.Component {
 
     onDrop = (approved, rejected) => {
         const droppedFile = approved[0]
-        this.setState({
-            rankingFile: droppedFile
-        })
+        console.log('droppedFile',droppedFile)
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            this.setState({
+                rankingFileBase64: event.target.result,
+                rankingFileName: droppedFile.name
+            })
+        }
+        reader.readAsDataURL(droppedFile);
     }
 
 
@@ -45,15 +52,15 @@ class RankingForm extends React.Component {
     }
 
     renderDroppedFileName() {
-      if (this.state.rankingFile) {
+      if (this.state.rankingFileBase64) {
         return (
-            <p>Filename: {this.state.rankingFile.name}</p>
+            <p>Filename: {this.state.rankingFileName}</p>
         )
       }
     }
 
     renderUploadForm() {
-        if (this.state.rankingFile) {
+        if (this.state.rankingFileBase64) {
             return (
                 <form onSubmit={this.sendFile}>
                   <Input
@@ -72,12 +79,13 @@ class RankingForm extends React.Component {
     sendFile = (e) => {
         e.preventDefault()
         const credentials = {
-            file: this.state.rankingFile,
-            name: this.state.rankingName
+            rankingFileBase64: this.state.rankingFileBase64,
+            rankingName: this.state.rankingName
         }
         this.props.createRanking(credentials)
         this.setState({
-            rankingFile: undefined,
+            rankingFileBase64: undefined,
+            rankingFileName: '',
             rankingName: ''
         })
     }
