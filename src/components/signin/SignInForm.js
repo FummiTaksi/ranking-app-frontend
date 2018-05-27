@@ -34,7 +34,7 @@ class SignInForm extends React.Component {
     render() {
         return (
         <div>
-            <h2>Signing in is only avaible for admin!</h2>
+            <h2>Signing in is only available for admin!</h2>
             <form onSubmit={this.logIn}>
                 <Input
                     type = "input"
