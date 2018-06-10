@@ -11,7 +11,8 @@ class RankingForm extends React.Component {
         this.state = {
             rankingFileBase64: undefined,
             rankingFileName: '',
-            rankingName: ''
+            rankingName: '',
+            rankingDate: Date.now()
         }
     }
 
@@ -70,6 +71,14 @@ class RankingForm extends React.Component {
                     value = {this.state.rankingName}
                     onChange = {this.handleFormChange}
                    />  
+                  <Input
+                    type = "date"
+                    text = "Date of competition:" 
+                    name = "rankingDate"
+                    value = {this.state.rankingDate}
+                    onChange = {this.handleFormChange}
+                   />  
+                   
                   <button type="submit">Upload</button>
                 </form>
             )
@@ -80,13 +89,15 @@ class RankingForm extends React.Component {
         e.preventDefault()
         const credentials = {
             rankingFileBase64: this.state.rankingFileBase64,
-            rankingName: this.state.rankingName
+            rankingName: this.state.rankingName,
+            rankingDate: this.state.rankingDate
         }
         this.props.createRanking(credentials)
         this.setState({
             rankingFileBase64: undefined,
             rankingFileName: '',
-            rankingName: ''
+            rankingName: '',
+            rankingDate: Date.now()
         })
     }
 
