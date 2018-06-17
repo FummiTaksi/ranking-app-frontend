@@ -33,7 +33,7 @@ class RankingForm extends React.Component {
 
     renderDropzone() {
         return (
-            <div>
+            <div id="fileDrop">
               <h3>Drop excel file to create new ranking </h3>
               <Dropzone
                 className="field upload-box"
