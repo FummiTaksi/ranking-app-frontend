@@ -28,4 +28,22 @@ export const createRanking = (content) => {
       }
 }
 
+export const getRankings = () => {
+  return async (dispatch) => {
+    try {
+      const response = await rankingService.getRankings()
+      const message =  'Rankings fetched successfully!'
+      dispatch({
+        type: 'SET_RANKINGS',
+        content: response
+      })
+      dispatchNotification(dispatch,message)  
+    }
+    catch(error) {
+     dispatchNotification(dispatch, 'Error while fetching ranking.')
+    }
+  }
+}
+
+
 export default reducer
