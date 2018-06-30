@@ -7,6 +7,12 @@ const createRanking = async (credentials) => {
   return response.data
 }
 
+const getRankings = async () => {
+  const url = baseUrl + "/"
+  const response =  await axios.get(url)
+  return response.data
+}
+
 let token = ''
 
 const getConfigObject = () => {
@@ -22,4 +28,4 @@ export const tokenChanger = store => next => action => {
     token = `bearer ${newToken}`
   }
 
-export default { createRanking }
+export default { createRanking, getRankings }
