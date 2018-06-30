@@ -40,7 +40,7 @@ export const getRankings = () => {
       dispatchNotification(dispatch,message)  
     }
     catch(error) {
-     dispatchNotification(dispatch, 'Error while fetching ranking.')
+     dispatchNotification(dispatch, 'Error while fetching rankings.')
     }
   }
 }
