@@ -4,6 +4,7 @@ import SignInForm from './signin/SignInForm'
 import Notification from './notification/Notification'
 import RankingForm from './ranking/RankingForm'
 import RankingList from './ranking/RankingList'
+import RankingView from './ranking/RankingView'
 import {logout, initCurrentUser} from '../reducers/loginReducer'
 import { connect } from 'react-redux'
 
@@ -23,11 +24,12 @@ class RankingApp extends React.Component {
                       <div>
                         <Link to="/">Home</Link> &nbsp;
                         <Link to="/signin">Sign in</Link>
-                        <Link to="rankings">Rankings</Link>
+                        <Link to="/rankings">Rankings</Link>
                       </div>
                         <Route exact path="/" render={() => this.HomePage()} />
                         <Route exact path="/signin" render={() => <SignInForm/>} />
                         <Route exact path="/rankings" render={() => <RankingList/>} />
+                        <Route exact path="/rankings/:rankingId" render={(location) => <RankingView location={location} />} />
                      </div>        
                 </Router>       
                 <Notification/>
@@ -44,13 +46,14 @@ class RankingApp extends React.Component {
                       <div>
                         <Link to="/">Home</Link> &nbsp;
                         <Link to="/upload"> Create new ranking</Link> &nbsp;
-                        <Link to="rankings">Rankings</Link> &nbsp;
+                        <Link to="/rankings">Rankings</Link> &nbsp;
                         You are signed in as {this.props.credentials.username} &nbsp;
                         <button onClick = {() => this.props.logout()}>Logout</button>
                       </div>
                         <Route exact path="/" render={() => this.HomePage()} />
                         <Route exact path="/upload" render={() => <RankingForm/>} />
                         <Route exact path="/rankings" render={() => <RankingList/>} />
+                        <Route exact path="/rankings/:rankingId" render={(location) => <RankingView location={location}/>} />
                      </div>        
                 </Router>       
                 <Notification/>
