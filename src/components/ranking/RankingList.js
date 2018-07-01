@@ -9,8 +9,6 @@ class RankingList extends React.Component {
     }
 
     renderRankingCell(rankingObject) {
-        console.log('rankingObject', rankingObject)
-        console.log('type of date', rankingObject.date.substring(0,10))
         const date = rankingObject.date.substring(0,10);
         return (
         <tr key = {rankingObject._id}>
@@ -19,6 +17,18 @@ class RankingList extends React.Component {
             <td>{rankingObject.positions.length}</td>
         </tr>
         )
+    }
+
+    getTimeOfCompetition = (rankingObject) => {
+        const date = new Date(rankingObject.date)
+        return date.getTime()
+    }
+
+    orderRankingsByDate()  {
+        const copyList =  this.props.rankings.slice()
+        return copyList.sort((a,b) => {
+            return this.getTimeOfCompetition(b) - this.getTimeOfCompetition(a)
+        })
     }
 
 
@@ -30,9 +40,10 @@ class RankingList extends React.Component {
         if (rankings.length === 0) {
             return <p>No rankings saved to database yet</p>
         }
+        const orderedRankings = this.orderRankingsByDate()
         return (
             <div>
-                <h3>Here are all {rankings.length} rankings that are uploaded to this site</h3>
+                <h3>Here are all {orderedRankings.length} rankings that are uploaded to this site</h3>
                 <table>
                     <tbody>
                     <tr>
@@ -40,7 +51,7 @@ class RankingList extends React.Component {
                         <th>Date</th> 
                         <th>Players</th>
                     </tr>
-                    {rankings.map((ranking) => {
+                    {orderedRankings.map((ranking) => {
                         return this.renderRankingCell(ranking)
                     })}
                     </tbody>
