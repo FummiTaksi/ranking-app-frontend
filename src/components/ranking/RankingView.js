@@ -6,8 +6,7 @@ class RankingView extends React.Component {
 
     componentDidMount() {
         const rankingId = this.props.location.match.params.rankingId;
-        console.log('rankingId', rankingId);
-        this.props.getRanking(this.props.location.match.params.rankingId)
+        this.props.getRanking(rankingId)
     }
 
     orderPositions()  {
@@ -18,7 +17,6 @@ class RankingView extends React.Component {
     }
 
     renderPositionCell(positionObject) {
-        console.log('positionObject', positionObject)
         return (
         <tr key = {positionObject._id}>
             <td>{positionObject.position}</td>
@@ -32,7 +30,6 @@ class RankingView extends React.Component {
         if (!this.props.ranking) {
             return <p>No ranking with this id!</p>
         }
-        console.log('this.props.ranking', this.props.ranking)
         if (!this.props.ranking.positions) {
             return <p>Loading ranking...</p>
         }

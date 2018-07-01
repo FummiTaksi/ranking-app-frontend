@@ -16,7 +16,6 @@ const reducer = (store = initialState, action) => {
       return notDeleted
     }
     if (action.type === 'GET_RANKING') {
-      console.log('setting ranking as', action.content.ranking)
       return action.content.ranking
     }
     return store 
@@ -76,9 +75,8 @@ export const getRankings = () => {
 export const getRanking = (rankingId) => {
   return async (dispatch) => {
     try {
-      console.log('olemmeko täällä')
       const response = await rankingService.getRanking(rankingId)
-      const message =  'Ranking ' + response.ranking.competitionName + ' successfully!'
+      const message =  'Ranking ' + response.ranking.competitionName + ' fetched successfully!'
       dispatch({
         type: 'GET_RANKING',
         content: response
