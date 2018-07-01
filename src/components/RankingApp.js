@@ -61,7 +61,11 @@ class RankingApp extends React.Component {
 
     HomePage() {
         return (
-            <h1>Welcome to RankingApp!</h1>
+            <div>
+                <h1>Welcome to RankingApp!</h1>
+                <p>This website's purpose is to offer Finnish table tennis rankings.</p>
+                <p>This website is developed in co-operation with Finnish table tennis union: <a href="http://www.sptl.fi/sptl_uudet/">www.sptl.fi</a></p>
+            </div>
         )
     }
 
