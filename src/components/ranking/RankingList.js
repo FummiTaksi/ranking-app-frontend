@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getRankings } from '../../reducers/rankingReducer'
 
-class RankingsView extends React.Component {
+class RankingList extends React.Component {
 
      componentDidMount() {
          this.props.getRankings();
@@ -60,5 +60,5 @@ const mapStateToProps = (state) => {
     }
 }
 
-const connectedRankingsView = connect(mapStateToProps, mapDispatchToProps)(RankingsView)
-export default connectedRankingsView
+const connectedRankingList = connect(mapStateToProps, mapDispatchToProps)(RankingList)
+export default connectedRankingList

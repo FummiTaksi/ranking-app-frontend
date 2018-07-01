@@ -3,7 +3,7 @@ import { HashRouter as Router, Route, Link } from 'react-router-dom'
 import SignInForm from './signin/SignInForm'
 import Notification from './notification/Notification'
 import RankingForm from './ranking/RankingForm'
-import RankingsView from './ranking/RankingsView'
+import RankingList from './ranking/RankingList'
 import {logout, initCurrentUser} from '../reducers/loginReducer'
 import { connect } from 'react-redux'
 
@@ -27,7 +27,7 @@ class RankingApp extends React.Component {
                       </div>
                         <Route exact path="/" render={() => this.HomePage()} />
                         <Route exact path="/signin" render={() => <SignInForm/>} />
-                        <Route exact path="/rankings" render={() => <RankingsView/>} />
+                        <Route exact path="/rankings" render={() => <RankingList/>} />
                      </div>        
                 </Router>       
                 <Notification/>
@@ -50,7 +50,7 @@ class RankingApp extends React.Component {
                       </div>
                         <Route exact path="/" render={() => this.HomePage()} />
                         <Route exact path="/upload" render={() => <RankingForm/>} />
-                        <Route exact path="/rankings" render={() => <RankingsView/>} />
+                        <Route exact path="/rankings" render={() => <RankingList/>} />
                      </div>        
                 </Router>       
                 <Notification/>
@@ -63,7 +63,7 @@ class RankingApp extends React.Component {
         return (
             <div>
                 <h1>Welcome to RankingApp!</h1>
-                <p>This website's purpose is to offer Finnish table tennis rankings.</p>
+                <p>This websites purpose is to offer Finnish table tennis rankings.</p>
                 <p>This website is developed in co-operation with Finnish table tennis union: <a href="http://www.sptl.fi/sptl_uudet/">www.sptl.fi</a></p>
             </div>
         )
