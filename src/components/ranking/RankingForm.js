@@ -12,7 +12,7 @@ class RankingForm extends React.Component {
             rankingFileBase64: undefined,
             rankingFileName: '',
             rankingName: '',
-            rankingDate: Date.now()
+            rankingDate: new Date()
         }
     }
 
