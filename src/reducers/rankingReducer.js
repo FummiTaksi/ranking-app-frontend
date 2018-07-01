@@ -8,6 +8,9 @@ const reducer = (store = initialState, action) => {
         const newList = [...store, action.content]
         return newList
     }
+    if (action.type === 'SET_RANKINGS') {
+      return action.content.rankings;
+    }
     return store 
 }
 
