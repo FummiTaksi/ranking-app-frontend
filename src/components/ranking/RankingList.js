@@ -1,21 +1,32 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getRankings } from '../../reducers/rankingReducer'
+import { getRankings, deleteRanking } from '../../reducers/rankingReducer'
 
 class RankingList extends React.Component {
 
-     componentDidMount() {
-         this.props.getRankings();
+     async componentDidMount() {
+         await this.props.getRankings()
     }
 
     renderRankingCell(rankingObject) {
-        const date = rankingObject.date.substring(0,10);
+        const date = rankingObject.date.substring(0,10)
         return (
-        <tr key = {rankingObject._id}>
+          <tr key = {rankingObject._id}>
             <td>{rankingObject.competitionName}</td>
             <td>{date}</td> 
-            <td>{rankingObject.positions.length}</td>
+            <td>{rankingObject.positions.length }</td>
+            <td>{ this.props.credentials.admin && this.deleteButton(rankingObject._id)}</td>
         </tr>
+        )
+    }
+
+    deleteRanking(rankingId) {
+        this.props.deleteRanking(rankingId)
+    }
+
+    deleteButton(rankingId) {
+        return (
+            <button onClick = {() => this.deleteRanking(rankingId)}>Delete</button>
         )
     }
 
@@ -34,6 +45,7 @@ class RankingList extends React.Component {
 
     render() {
         const rankings = this.props.rankings
+        console.log('rankings', rankings)
         if (!rankings) {
             return <p>Loading rankings from database...</p>
         }
@@ -62,12 +74,14 @@ class RankingList extends React.Component {
 }
 
 const mapDispatchToProps = {
-    getRankings
+    getRankings,
+    deleteRanking
 }
 
 const mapStateToProps = (state) => {
     return {
-        rankings: state.ranking
+        rankings: state.ranking,
+        credentials: state.login
     }
 }
 
