@@ -15,6 +15,10 @@ const reducer = (store = initialState, action) => {
       const notDeleted = store.filter(b => b._id !== action.content.deletedRanking._id)
       return notDeleted
     }
+    if (action.type === 'GET_RANKING') {
+      console.log('setting ranking as', action.content.ranking)
+      return action.content.ranking
+    }
     return store 
 }
 
@@ -65,6 +69,24 @@ export const getRankings = () => {
     }
     catch(error) {
      dispatchNotification(dispatch, 'Error while fetching rankings.')
+    }
+  }
+}
+
+export const getRanking = (rankingId) => {
+  return async (dispatch) => {
+    try {
+      console.log('olemmeko täällä')
+      const response = await rankingService.getRanking(rankingId)
+      const message =  'Ranking ' + response.ranking.competitionName + ' successfully!'
+      dispatch({
+        type: 'GET_RANKING',
+        content: response
+      })
+      dispatchNotification(dispatch,message)  
+    }
+    catch(error) {
+     dispatchNotification(dispatch, 'Error while fetching ranking.')
     }
   }
 }
