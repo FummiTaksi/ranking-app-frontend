@@ -49,7 +49,7 @@ class RankingList extends React.Component {
 
     render() {
         const rankings = this.props.rankings
-        if (!rankings) {
+        if (!rankings || rankings.positions) {
             return <p>Loading rankings from database...</p>
         }
         if (rankings.length === 0) {
