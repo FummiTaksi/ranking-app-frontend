@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { getRankings, deleteRanking } from '../../reducers/rankingReducer'
 
 class RankingList extends React.Component {
@@ -10,9 +11,12 @@ class RankingList extends React.Component {
 
     renderRankingCell(rankingObject) {
         const date = rankingObject.date.substring(0,10)
+        const linkToRanking = "/rankings/" + rankingObject._id
         return (
           <tr key = {rankingObject._id}>
-            <td>{rankingObject.competitionName}</td>
+            <td>
+                <Link to={linkToRanking}> {rankingObject.competitionName}</Link>
+            </td>
             <td>{date}</td> 
             <td>{rankingObject.positions.length }</td>
             <td>{ this.props.credentials.admin && this.deleteButton(rankingObject._id)}</td>
