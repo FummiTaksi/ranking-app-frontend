@@ -7,6 +7,12 @@ const createRanking = async (credentials) => {
   return response.data
 }
 
+const deleteRanking = async (rankingId) => {
+  const url = baseUrl + "/" + rankingId
+  const response = await axios.delete(url, getConfigObject())
+  return response.data
+}
+
 const getRankings = async () => {
   const url = baseUrl + "/"
   const response =  await axios.get(url)
@@ -28,4 +34,4 @@ export const tokenChanger = store => next => action => {
     token = `bearer ${newToken}`
   }
 
-export default { createRanking, getRankings }
+export default { createRanking, getRankings, deleteRanking }
