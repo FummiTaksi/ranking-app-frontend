@@ -19,7 +19,6 @@ class RankingForm extends React.Component {
 
     onDrop = (approved, rejected) => {
         const droppedFile = approved[0]
-        console.log('droppedFile',droppedFile)
         const reader = new FileReader();
         reader.onload = (event) => {
             this.setState({

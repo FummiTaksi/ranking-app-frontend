@@ -45,7 +45,6 @@ class RankingList extends React.Component {
 
     render() {
         const rankings = this.props.rankings
-        console.log('rankings', rankings)
         if (!rankings) {
             return <p>Loading rankings from database...</p>
         }
