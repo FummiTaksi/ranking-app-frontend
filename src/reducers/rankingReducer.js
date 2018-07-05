@@ -1,22 +1,26 @@
 import rankingService from '../services/rankingService'
 import { dispatchNotification } from './notificationReducer'
 
-const initialState = []
+const initialState ={allRankings: [] , selectedRanking: {}}
 
 const reducer = (store = initialState, action) => {
     if (action.type === 'CREATE_RANKING') {
-        const newList = [...store, action.content.ranking]
-        return newList
+        const allRankings = [...store.allRankings, action.content.ranking]
+        const newState = {...store, allRankings}
+        return newState
     }
     if (action.type === 'SET_RANKINGS') {
-      return action.content.rankings;
+      const newState = {...store, allRankings: action.content.rankings}
+      return newState
     }
     if (action.type === 'DELETE_RANKING') {
-      const notDeleted = store.filter(b => b._id !== action.content.deletedRanking._id)
-      return notDeleted
+      const notDeleted = store.allRankings.filter(b => b._id !== action.content.deletedRanking._id)
+      const newState = {...store, allRankings: notDeleted}
+      return newState
     }
     if (action.type === 'GET_RANKING') {
-      return action.content.ranking
+      const newState = {...store, selectedRanking: action.content.ranking}
+      return newState
     }
     return store 
 }

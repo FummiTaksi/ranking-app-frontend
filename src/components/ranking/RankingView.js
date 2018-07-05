@@ -63,7 +63,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
     return {
-        ranking: state.ranking,
+        ranking: state.ranking.selectedRanking,
         credentials: state.login
     }
 }
