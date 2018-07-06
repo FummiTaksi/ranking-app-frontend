@@ -1,4 +1,5 @@
 import React from 'react'
+import { Table } from 'semantic-ui-react'
 
 class PositionList extends React.Component {
 
@@ -7,31 +8,31 @@ class PositionList extends React.Component {
     }
     renderPositionCell(positionObject) {
         return (
-        <tr key = {positionObject._id}>
-            <td>{positionObject.position}</td>
-            <td>{positionObject.playerName}</td> 
-            <td>{positionObject.clubName }</td>
-            <td>{positionObject.rating}</td>
-        </tr>
+        <Table.Row key = {positionObject._id}>
+            <Table.Cell>{positionObject.position}</Table.Cell>
+            <Table.Cell>{positionObject.playerName}</Table.Cell> 
+            <Table.Cell>{positionObject.clubName }</Table.Cell>
+            <Table.Cell>{positionObject.rating}</Table.Cell>
+        </Table.Row>
         )
     }
 
     render() {
         return (
             <div>
-                <table>
-                    <tbody>
-                    <tr>
-                        <th>Position</th>
-                        <th>Player</th>
-                        <th>Club</th> 
-                        <th>Rating</th>
-                    </tr>
+                <Table>
+                    <Table.Header>
+                      <Table.Row>
+                        <Table.HeaderCell>Position</Table.HeaderCell>
+                        <Table.HeaderCell>Player</Table.HeaderCell>
+                        <Table.HeaderCell>Club</Table.HeaderCell> 
+                        <Table.HeaderCell>Rating</Table.HeaderCell>
+                      </Table.Row>
+                    </Table.Header>
                     {this.props.positions.map((position) => {
                         return this.renderPositionCell(position)
                     })}
-                    </tbody>
-                </table>
+                </Table>
             </div>
         )
     }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Message } from 'semantic-ui-react'
 
 class Notification extends React.Component {
 
@@ -10,7 +11,11 @@ class Notification extends React.Component {
           }
           return (
             <div className = "success">
-              {notification}
+               <Message
+                icon='inbox'
+                header={notification}
+                content=''
+                />
             </div>
           )
     }

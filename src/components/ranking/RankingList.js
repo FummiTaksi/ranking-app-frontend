@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getRankings, deleteRanking } from '../../reducers/rankingReducer'
+import { Table } from 'semantic-ui-react'
 
 class RankingList extends React.Component {
 
@@ -13,14 +14,14 @@ class RankingList extends React.Component {
         const date = rankingObject.date.substring(0,10)
         const linkToRanking = "/rankings/" + rankingObject._id
         return (
-          <tr key = {rankingObject._id}>
-            <td>
+          <Table.Row key = {rankingObject._id}>
+            <Table.Cell>
                 <Link to={linkToRanking}> {rankingObject.competitionName}</Link>
-            </td>
-            <td>{date}</td> 
-            <td>{rankingObject.positions.length }</td>
-            <td>{ this.props.credentials.admin && this.deleteButton(rankingObject._id)}</td>
-        </tr>
+            </Table.Cell>
+            <Table.Cell>{date}</Table.Cell> 
+            <Table.Cell>{rankingObject.positions.length }</Table.Cell>
+            <Table.Cell>{ this.props.credentials.admin && this.deleteButton(rankingObject._id)}</Table.Cell>
+        </Table.Row>
         )
     }
 
@@ -59,18 +60,21 @@ class RankingList extends React.Component {
         return (
             <div>
                 <h3>Here are all {orderedRankings.length} rankings that are uploaded to this site</h3>
-                <table>
-                    <tbody>
-                    <tr>
-                        <th>Competition name</th>
-                        <th>Date</th> 
-                        <th>Players</th>
-                    </tr>
+                <Table>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Competition name</Table.HeaderCell>
+                            <Table.HeaderCell>Date</Table.HeaderCell> 
+                            <Table.HeaderCell>Players</Table.HeaderCell>
+                            <Table.HeaderCell></Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
                     {orderedRankings.map((ranking) => {
                         return this.renderRankingCell(ranking)
                     })}
-                    </tbody>
-                </table>
+                    </Table.Body>
+                </Table>
             </div>
         )
     }

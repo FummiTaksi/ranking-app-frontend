@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getRanking, deleteRanking } from '../../reducers/rankingReducer'
 import PositionList from './PositionList'
-import { bindActionCreators } from '../../../../../Library/Caches/typescript/2.9/node_modules/redux';
+import { Button, Icon } from 'semantic-ui-react'
+
 
 class RankingView extends React.Component {
 
@@ -52,6 +53,21 @@ class RankingView extends React.Component {
             return currentList
         },[])
     }
+
+    renderNavigationButtons(listLength) {
+        return (
+            <div id= "navigationButtons">
+              <Button onClick={this.toggleLeft} 
+                disabled= {this.state.selectedIndex === 0}>
+                <Icon name= "angle double left" />
+              </Button>
+              <Button onClick={this.toggleRight} 
+                disabled= {this.state.selectedIndex === listLength - 1}>
+               <Icon name= "angle double right" />
+              </Button>
+         </div>
+        )
+    }
     render() {
         if (!this.props.ranking) {
             return <p>No ranking with this id!</p>
@@ -64,10 +80,10 @@ class RankingView extends React.Component {
         return (
             <div>
                 <h3>{this.props.ranking.competitionName}, players {orderedPositions.length}</h3>
-                <h4>Showing page {this.state.selectedIndex + 1 }/ {orderedPositionGroups.length} </h4>
+                <h4>Showing page {this.state.selectedIndex + 1 } / {orderedPositionGroups.length} </h4>
+                {this.renderNavigationButtons(orderedPositionGroups.length)}
                 <PositionList positions= {orderedPositionGroups[this.state.selectedIndex]}/>
-                <button onClick={this.toggleLeft} disabled= {this.state.selectedIndex === 0}>Previous page</button>
-                <button onClick={this.toggleRight} disabled= {this.state.selectedIndex === orderedPositionGroups.length - 1}>Next page</button>
+                {this.renderNavigationButtons(orderedPositionGroups.length)}
             </div>
             
         )
