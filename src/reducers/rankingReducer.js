@@ -75,7 +75,7 @@ export const getRankings = () => {
     try {
       const response = await rankingService.getRankings()
       const header = 'Rankings fetched successfully!'
-      const content = 'Have fun :D'
+      const content = ''
       const icon = 'list ul'
       dispatch({
         type: 'SET_RANKINGS',
