@@ -42,11 +42,16 @@ export const login = (credentials) => {
                 admin: response.admin,
                 token: response.token
             })
-            const message = 'Welcome back ' + response.username + '!'
-            dispatchNotification(dispatch, message)
+            const header = 'Login successfully!'
+            const content = 'Welcome back, ' + response.username + '!'
+            const icon = 'sign in alternate'
+            dispatchNotification(dispatch, {header, content, icon})
         }
         catch(error) {
-            dispatchNotification(dispatch, 'Wrong username or password!')
+            const header = 'Login failed!'
+            const content = 'Wrong username or password!'
+            const icon = 'thumbs down'
+            dispatchNotification(dispatch, {header, content, icon})
         }
     }
 }
@@ -55,7 +60,10 @@ export const logout = () => {
         dispatch({
             type: 'LOGOUT'
         })
-        dispatchNotification(dispatch, 'Thank you, come again!')
+        const header = 'Logout successfully!'
+        const content = 'Thank you, come again!'
+        const icon = 'sign out alternate'
+        dispatchNotification(dispatch, {header,content,icon})
     }
 }
 

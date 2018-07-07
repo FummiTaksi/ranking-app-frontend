@@ -29,15 +29,20 @@ export const createRanking = (content) => {
       return async (dispatch) => {
         try {
           const response = await rankingService.createRanking(content)
-          const message =  'Ranking ' + content.rankingName + ' was created succsefully!'
+          const header = 'Ranking ' + content.rankingName + ' was created succsefully!'
+          const content = 'Click Rankings to view ranking you created.'
+          const icon = 'thumbs up'
           dispatch({
             type: 'CREATE_RANKING',
             content: response
           })
-          dispatchNotification(dispatch,message)  
+          dispatchNotification(dispatch,{header, content, icon})  
         }
         catch(error) {
-         dispatchNotification(dispatch, 'Error at creating ranking.')
+          const header = 'Error occured while creating ranking'
+          const content = 'Make sure excel file is correct rating file'
+          const icon = 'thumbs down'
+         dispatchNotification(dispatch, {header, content, icon})
         }
       }
 }
@@ -46,15 +51,21 @@ export const deleteRanking = (rankingId) => {
   return async (dispatch) => {
     try {
       const response = await rankingService.deleteRanking(rankingId)
-      const message =  'Ranking ' + response.deletedRanking.competitionName + ' was deleted succsefully!'
+      const header = 'Ranking ' + response.deletedRanking.competitionName + ' was deleted succsefully!'
+      const content = 'Page should update list automatically'
+      const icon = 'thumbs up'
+      const message =  
       dispatch({
         type: 'DELETE_RANKING',
         content: response
       })
-      dispatchNotification(dispatch,message)  
+      dispatchNotification(dispatch,{header, content, icon})  
     }
     catch(error) {
-     dispatchNotification(dispatch, 'Error while deleting ranking.')
+      const header = 'Error occured while deleting ranking'
+      const content = 'Try again later'
+      const icon = 'thumbs down'
+     dispatchNotification(dispatch, {header, content, icon})
     }
   }
 }
@@ -63,15 +74,20 @@ export const getRankings = () => {
   return async (dispatch) => {
     try {
       const response = await rankingService.getRankings()
-      const message =  'Rankings fetched successfully!'
+      const header = 'Rankings fetched successfully!'
+      const content = 'Have fun :D'
+      const icon = 'list ul'
       dispatch({
         type: 'SET_RANKINGS',
         content: response
       })
-      dispatchNotification(dispatch,message)  
+      dispatchNotification(dispatch,{header, content, icon})  
     }
     catch(error) {
-     dispatchNotification(dispatch, 'Error while fetching rankings.')
+      const header = 'Error while fetching rankings'
+      const content = 'Try again later'
+      const icon = 'thumbs down'
+     dispatchNotification(dispatch, {header, content, icon})
     }
   }
 }
@@ -80,15 +96,20 @@ export const getRanking = (rankingId) => {
   return async (dispatch) => {
     try {
       const response = await rankingService.getRanking(rankingId)
-      const message =  'Ranking ' + response.ranking.competitionName + ' fetched successfully!'
+      const header = 'Ranking ' + response.ranking.competitionName + ' fetched successfully!'
+      const content = 'Have fun browsing!'
+      const icon = 'trophy'
       dispatch({
         type: 'GET_RANKING',
         content: response
       })
-      dispatchNotification(dispatch,message)  
+      dispatchNotification(dispatch,{header, content, icon})  
     }
     catch(error) {
-     dispatchNotification(dispatch, 'Error while fetching ranking.')
+      const header = 'Error while fetching ranking'
+      const content = 'Try again later'
+      const icon = 'thumbs down'
+     dispatchNotification(dispatch, {header,content,icon})
     }
   }
 }

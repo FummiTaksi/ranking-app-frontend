@@ -12,9 +12,9 @@ class Notification extends React.Component {
           return (
             <div className = "success">
                <Message
-                icon='inbox'
-                header={notification}
-                content=''
+                icon={notification.icon}
+                header={notification.header}
+                content={notification.content}
                 />
             </div>
           )
