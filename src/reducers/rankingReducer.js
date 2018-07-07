@@ -1,7 +1,7 @@
 import rankingService from '../services/rankingService'
 import { dispatchNotification } from './notificationReducer'
 
-const initialState ={allRankings: [] , selectedRanking: {}}
+const initialState ={ allRankings: [] , selectedRanking: {} }
 
 const reducer = (store = initialState, action) => {
     if (action.type === 'CREATE_RANKING') {
@@ -26,6 +26,7 @@ const reducer = (store = initialState, action) => {
 }
 
 export const createRanking = (content) => {
+    console.log('content', content)
       return async (dispatch) => {
         try {
           const response = await rankingService.createRanking(content)
@@ -54,7 +55,6 @@ export const deleteRanking = (rankingId) => {
       const header = 'Ranking ' + response.deletedRanking.competitionName + ' was deleted succsefully!'
       const content = 'Page should update list automatically'
       const icon = 'thumbs up'
-      const message =  
       dispatch({
         type: 'DELETE_RANKING',
         content: response
@@ -113,6 +113,5 @@ export const getRanking = (rankingId) => {
     }
   }
 }
-
 
 export default reducer
