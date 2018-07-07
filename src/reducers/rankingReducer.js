@@ -25,12 +25,11 @@ const reducer = (store = initialState, action) => {
     return store 
 }
 
-export const createRanking = (content) => {
-    console.log('content', content)
+export const createRanking = (createContent) => {
       return async (dispatch) => {
         try {
-          const response = await rankingService.createRanking(content)
-          const header = 'Ranking ' + content.rankingName + ' was created succsefully!'
+          const response = await rankingService.createRanking(createContent)
+          const header = 'Ranking ' + createContent.rankingName + ' was created succsefully!'
           const content = 'Click Rankings to view ranking you created.'
           const icon = 'thumbs up'
           dispatch({
