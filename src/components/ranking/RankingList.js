@@ -50,7 +50,7 @@ class RankingList extends React.Component {
 
     render() {
         const rankings = this.props.rankings
-        if (!rankings) {
+        if (this.props.loading) {
             return <p>Loading rankings from database...</p>
         }
         if (rankings.length === 0) {
@@ -88,6 +88,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => {
     return {
         rankings: state.ranking.allRankings,
+        loading: state.ranking.loading,
         credentials: state.login
     }
 }

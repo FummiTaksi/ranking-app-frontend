@@ -1,25 +1,29 @@
 import rankingService from '../services/rankingService'
 import { dispatchNotification } from './notificationReducer'
 
-const initialState ={ allRankings: [] , selectedRanking: {} }
+const initialState ={ allRankings: [] , selectedRanking: {}, loading: false }
 
 const reducer = (store = initialState, action) => {
     if (action.type === 'CREATE_RANKING') {
         const allRankings = [...store.allRankings, action.content.ranking]
-        const newState = {...store, allRankings}
+        const newState = {...store, allRankings, loading: false}
         return newState
     }
+    if (action.type === 'SETTING_RANKINGS') {
+      const newState = {...store, loading: true}
+      return newState
+    }
     if (action.type === 'SET_RANKINGS') {
-      const newState = {...store, allRankings: action.content.rankings}
+      const newState = {...store, allRankings: action.content.rankings, loading: false}
       return newState
     }
     if (action.type === 'DELETE_RANKING') {
       const notDeleted = store.allRankings.filter(b => b._id !== action.content.deletedRanking._id)
-      const newState = {...store, allRankings: notDeleted}
+      const newState = {...store, allRankings: notDeleted, loading: false}
       return newState
     }
     if (action.type === 'GET_RANKING') {
-      const newState = {...store, selectedRanking: action.content.ranking}
+      const newState = {...store, selectedRanking: action.content.ranking, loading: false}
       return newState
     }
     return store 
@@ -72,6 +76,9 @@ export const deleteRanking = (rankingId) => {
 export const getRankings = () => {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: 'SETTING_RANKINGS'
+      })
       const response = await rankingService.getRankings()
       const header = 'Rankings fetched successfully!'
       const content = ''
