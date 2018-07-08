@@ -31,7 +31,7 @@ class RankingList extends React.Component {
 
     deleteButton(rankingId) {
         return (
-            <button onClick = {() => this.deleteRanking(rankingId)}>Delete</button>
+            <button className="delete" onClick = {() => this.deleteRanking(rankingId)}>Delete</button>
         )
     }
 
