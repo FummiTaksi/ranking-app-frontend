@@ -9,6 +9,10 @@ const reducer = (store = initialState, action) => {
         const newState = {...store, allRankings, loading: false}
         return newState
     }
+    if (action.type === 'CREATING_RANKING') {
+      const newState = {...store, loading: true}
+      return newState
+    }
     if (action.type === 'SETTING_RANKINGS') {
       const newState = {...store, loading: true}
       return newState
@@ -17,9 +21,17 @@ const reducer = (store = initialState, action) => {
       const newState = {...store, allRankings: action.content.rankings, loading: false}
       return newState
     }
+    if (action.type === 'DELETING_RANKING') {
+      const newState = {...store, loading: true}
+      return newState
+    }
     if (action.type === 'DELETE_RANKING') {
       const notDeleted = store.allRankings.filter(b => b._id !== action.content.deletedRanking._id)
       const newState = {...store, allRankings: notDeleted, loading: false}
+      return newState
+    }
+    if (action.type === 'GETTING_RANKING') {
+      const newState = {...store, loading: true}
       return newState
     }
     if (action.type === 'GET_RANKING') {
@@ -32,6 +44,9 @@ const reducer = (store = initialState, action) => {
 export const createRanking = (createContent) => {
       return async (dispatch) => {
         try {
+          dispatch({
+            type: 'CREATING_RANKING'
+          })
           const response = await rankingService.createRanking(createContent)
           const header = 'Ranking ' + createContent.rankingName + ' was created succsefully!'
           const content = 'Click Rankings to view ranking you created.'
@@ -54,6 +69,9 @@ export const createRanking = (createContent) => {
 export const deleteRanking = (rankingId) => {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: 'DELETING_RANKING'
+      })
       const response = await rankingService.deleteRanking(rankingId)
       const header = 'Ranking ' + response.deletedRanking.competitionName + ' was deleted succsefully!'
       const content = 'Page should update list automatically'
@@ -101,6 +119,9 @@ export const getRankings = () => {
 export const getRanking = (rankingId) => {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: 'GETTING_RANKING'
+      })
       const response = await rankingService.getRanking(rankingId)
       const header = 'Ranking ' + response.ranking.competitionName + ' fetched successfully!'
       const content = 'Have fun browsing!'

@@ -21,8 +21,8 @@ class RankingView extends React.Component {
         this.props.getRanking(rankingId)
     }
 
-    orderPositions()  {
-        const copyList =  this.props.ranking.positions.slice()
+    orderPositions(selectedRanking)  {
+        const copyList = selectedRanking.positions.slice()
         return copyList.sort((a,b) => {
             return a.position - b.position
         })
@@ -69,17 +69,24 @@ class RankingView extends React.Component {
         )
     }
     render() {
-        if (!this.props.ranking) {
+        if (this.props.ranking.loading) {
+            return (
+            <div className="ui segment">
+                <div className="ui active inverted dimmer">
+                    <div className="ui textloader">Loading ranking from database</div>
+                </div>
+            </div>
+            )
+        }
+        const selectedRanking = this.props.ranking.selectedRanking
+        if (!selectedRanking.positions) {
             return <p>No ranking with this id!</p>
         }
-        if (!this.props.ranking.positions) {
-            return <p>Loading ranking...</p>
-        }
-        const orderedPositions = this.orderPositions()
+        const orderedPositions = this.orderPositions(selectedRanking)
         const orderedPositionGroups = this.orderPositionGroups(orderedPositions);
         return (
             <div>
-                <h3>{this.props.ranking.competitionName}, players {orderedPositions.length}</h3>
+                <h3>{selectedRanking.competitionName}, players {orderedPositions.length}</h3>
                 <h4>Showing page {this.state.selectedIndex + 1 } / {orderedPositionGroups.length} </h4>
                 {this.renderNavigationButtons(orderedPositionGroups.length)}
                 <PositionList positions= {orderedPositionGroups[this.state.selectedIndex]}/>
@@ -97,7 +104,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
     return {
-        ranking: state.ranking.selectedRanking,
+        ranking: state.ranking,
         credentials: state.login
     }
 }

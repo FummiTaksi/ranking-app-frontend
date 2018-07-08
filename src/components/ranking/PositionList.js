@@ -21,6 +21,7 @@ class PositionList extends React.Component {
         return (
             <div>
                 <Table>
+                    
                     <Table.Header>
                       <Table.Row>
                         <Table.HeaderCell>Position</Table.HeaderCell>
@@ -29,9 +30,11 @@ class PositionList extends React.Component {
                         <Table.HeaderCell>Rating</Table.HeaderCell>
                       </Table.Row>
                     </Table.Header>
+                    <tbody>
                     {this.props.positions.map((position) => {
                         return this.renderPositionCell(position)
                     })}
+                    </tbody>
                 </Table>
             </div>
         )

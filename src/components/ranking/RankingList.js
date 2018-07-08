@@ -51,7 +51,14 @@ class RankingList extends React.Component {
     render() {
         const rankings = this.props.ranking.allRankings
         if (this.props.ranking.loading) {
-            return <p>Loading rankings from database...</p>
+            return (
+                <div className="ui segment">
+                    <div className="ui active inverted dimmer">
+                        <div className="ui textloader">Loading rankings from database</div>
+                    </div>
+                </div>
+            )
+
         }
         if (rankings.length === 0) {
             return <p>No rankings saved to database yet</p>
