@@ -40,8 +40,8 @@ class RankingList extends React.Component {
         return date.getTime()
     }
 
-    orderRankingsByDate()  {
-        const copyList =  this.props.rankings.slice()
+    orderRankingsByDate(rankings)  {
+        const copyList = rankings.slice()
         return copyList.sort((a,b) => {
             return this.getTimeOfCompetition(b) - this.getTimeOfCompetition(a)
         })
@@ -49,14 +49,14 @@ class RankingList extends React.Component {
 
 
     render() {
-        const rankings = this.props.rankings
-        if (this.props.loading) {
+        const rankings = this.props.ranking.allRankings
+        if (this.props.ranking.loading) {
             return <p>Loading rankings from database...</p>
         }
         if (rankings.length === 0) {
             return <p>No rankings saved to database yet</p>
         }
-        const orderedRankings = this.orderRankingsByDate()
+        const orderedRankings = this.orderRankingsByDate(rankings)
         return (
             <div>
                 <h3>Here are all {orderedRankings.length} rankings that are uploaded to this site</h3>
@@ -87,8 +87,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
     return {
-        rankings: state.ranking.allRankings,
-        loading: state.ranking.loading,
+        ranking: state.ranking,
         credentials: state.login
     }
 }
