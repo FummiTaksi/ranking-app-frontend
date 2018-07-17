@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "dropzone": "^5.4.0",
     "jest-cli": "^21.2.1",
+    "prop-types": "^15.6.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-dropzone": "^4.2.9",
@@ -18,12 +19,18 @@
   "devDependencies": {
     "coveralls": "^3.0.2",
     "deep-freeze": "0.0.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.10.0",
     "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "NODE_ENV=test react-scripts test --env=jsdom --coverage",
+    "lint": "eslint .",
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:3001"
