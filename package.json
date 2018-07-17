@@ -16,6 +16,7 @@
     "semantic-ui-react": "^0.82.0"
   },
   "devDependencies": {
+    "coveralls": "^3.0.2",
     "deep-freeze": "0.0.1",
     "react-scripts": "1.1.4"
   },
