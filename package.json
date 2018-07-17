@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "NODE_ENV=test react-scripts test --env=jsdom",
+    "test": "NODE_ENV=test react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:3001"
