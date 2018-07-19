@@ -57,13 +57,13 @@ class RankingApp extends React.Component {
         <Router>
           <div>
             <Menu>
-              {this.linkWithIcon('/', 'Home', 'home')}
+              {linkWithIcon('/', 'Home', 'home')}
               {' '}
 &nbsp;
-              {this.linkWithIcon('/signin', 'Sign in', 'sign in alternate')}
+              {linkWithIcon('/signin', 'Sign in', 'sign in alternate')}
               {' '}
 &nbsp;
-              {this.linkWithIcon('/rankings', 'Rankings', 'ordered list')}
+              {linkWithIcon('/rankings', 'Rankings', 'ordered list')}
               {' '}
 &nbsp;
             </Menu>
