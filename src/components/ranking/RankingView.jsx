@@ -4,6 +4,25 @@ import { Button, Icon } from 'semantic-ui-react';
 import { getRanking, deleteRanking } from '../../reducers/rankingReducer';
 import PositionList from './PositionList';
 
+const orderPositions = (selectedRanking) => {
+  const copyList = selectedRanking.positions.slice();
+  return copyList.sort((a, b) => a.position - b.position);
+};
+
+const orderPositionGroups = (orderedPositions) => {
+  let i = 0;
+  return orderedPositions.reduce((currentList, currentPosition) => {
+    const copyList = currentList;
+    if (copyList[i] && currentList[i].length >= 100) {
+      i += 1;
+    }
+    if (!currentList[i]) {
+      copyList[i] = [];
+    }
+    copyList[i].push(currentPosition);
+    return copyList;
+  }, []);
+};
 
 class RankingView extends React.Component {
   constructor(props) {
@@ -20,11 +39,6 @@ class RankingView extends React.Component {
     this.props.getRanking(rankingId);
   }
 
-  orderPositions(selectedRanking) {
-    const copyList = selectedRanking.positions.slice();
-    return copyList.sort((a, b) => a.position - b.position);
-  }
-
   toggleLeft() {
     this.setState({
       selectedIndex: this.state.selectedIndex - 1,
@@ -35,20 +49,6 @@ class RankingView extends React.Component {
     this.setState({
       selectedIndex: this.state.selectedIndex + 1,
     });
-  }
-
-  orderPositionGroups(orderedPositions) {
-    let i = 0;
-    return orderedPositions.reduce((currentList, currentPosition) => {
-      if (currentList[i] && currentList[i].length >= 100) {
-        i++;
-      }
-      if (!currentList[i]) {
-        currentList[i] = [];
-      }
-      currentList[i].push(currentPosition);
-      return currentList;
-    }, []);
   }
 
   renderNavigationButtons(listLength) {
@@ -76,7 +76,7 @@ class RankingView extends React.Component {
         <div className="ui segment">
           <div className="ui active inverted dimmer">
             <div className="ui textloader">
-Loading ranking from database
+              Loading ranking from database
             </div>
           </div>
         </div>
@@ -86,29 +86,21 @@ Loading ranking from database
     if (!selectedRanking.positions) {
       return (
         <p>
-No ranking with this id!
+          No ranking with this id!
         </p>
       );
     }
-    const orderedPositions = this.orderPositions(selectedRanking);
-    const orderedPositionGroups = this.orderPositionGroups(orderedPositions);
+    const orderedPositions = orderPositions(selectedRanking);
+    const orderedPositionGroups = orderPositionGroups(orderedPositions);
+    const players = `${selectedRanking.competitionName}, players ${orderedPositions.length}`;
+    const pageInfo = `Showing page ${this.state.selectedIndex + 1 } / ${orderedPositionGroups.length}`;
     return (
       <div>
         <h3>
-          {selectedRanking.competitionName}
-, players
-          {' '}
-          {orderedPositions.length}
+          {players}
         </h3>
         <h4>
-Showing page
-          {' '}
-          {this.state.selectedIndex + 1 }
-          {' '}
-/
-          {' '}
-          {orderedPositionGroups.length}
-          {' '}
+          {pageInfo}
         </h4>
         {this.renderNavigationButtons(orderedPositionGroups.length)}
         <PositionList positions={orderedPositionGroups[this.state.selectedIndex]} />
