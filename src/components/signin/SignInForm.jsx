@@ -10,15 +10,17 @@ class SignInForm extends React.Component {
       username: '',
       password: '',
     };
+    this.handleFormChange = this.handleFormChange.bind(this);
+    this.logIn = this.logIn.bind(this);
   }
 
-  handleFormChange = (e) => {
+  handleFormChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
     });
   }
 
-  logIn = (e) => {
+  logIn(e) {
     e.preventDefault();
     const credentials = {
       username: this.state.username,
@@ -35,7 +37,7 @@ class SignInForm extends React.Component {
     return (
       <div>
         <h2>
-Signing in is only available for admin!
+          Signing in is only available for admin!
         </h2>
         <form onSubmit={this.logIn}>
           <Input
@@ -53,7 +55,7 @@ Signing in is only available for admin!
             onChange={this.handleFormChange}
           />
           <button type="submit">
-Log in
+            Log in
             {' '}
           </button>
         </form>
