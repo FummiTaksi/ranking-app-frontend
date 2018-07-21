@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Message } from 'semantic-ui-react';
 
 function Notification({ notification }) {
-  if (notification === '') {
+  if (notification.icon === '') {
     return null;
   }
   return (
