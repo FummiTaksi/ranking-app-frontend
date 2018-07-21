@@ -18,17 +18,10 @@ function Input({
 }
 Input.propTypes = {
   text: PropTypes.string.isRequired,
-  type: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-  ]),
+  type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-};
-
-Input.defaultProps = {
-  type: PropTypes.string,
 };
 
 export default Input;
