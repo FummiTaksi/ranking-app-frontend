@@ -15,7 +15,11 @@ export const notificationChange = (message, time) => async (dispatch) => {
   setTimeout(() => {
     dispatch({
       type: 'CHANGE_NOTIFICATION',
-      message: '',
+      message: {
+        icon: '',
+        header: '',
+        message: '',
+      },
     });
   }, time * 1000);
 };
@@ -28,7 +32,11 @@ export const dispatchNotification = (dispatch, message) => {
   setTimeout(() => {
     dispatch({
       type: 'CHANGE_NOTIFICATION',
-      message: '',
+      message: {
+        icon: '',
+        header: '',
+        message: '',
+      },
     });
   }, 5 * 1000);
 };
