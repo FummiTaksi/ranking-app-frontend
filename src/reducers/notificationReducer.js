@@ -1,4 +1,4 @@
-const initialState = '';
+const initialState = { icon: '', header: '', message: '' };
 
 const reducer = (store = initialState, action) => {
   if (action.type === 'CHANGE_NOTIFICATION') {
