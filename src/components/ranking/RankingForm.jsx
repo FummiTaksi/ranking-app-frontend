@@ -19,6 +19,10 @@ class RankingForm extends React.Component {
       rankingName: '',
       rankingDate: new Date(),
     };
+    this.handleFormChange = this.handleFormChange.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+    this.handleFormChange = this.handleFormChange.bind(this);
+    this.sendFile = this.sendFile.bind(this);
   }
 
   onDrop(approved) {
@@ -51,7 +55,7 @@ class RankingForm extends React.Component {
 
   handleFormChange(e) {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   }
 
@@ -79,7 +83,6 @@ class RankingForm extends React.Component {
         </form>
       );
     }
-    return null;
   }
 
   renderDroppedFileName() {
@@ -91,7 +94,6 @@ class RankingForm extends React.Component {
         </p>
       );
     }
-    return null;
   }
 
   renderDropzone() {
