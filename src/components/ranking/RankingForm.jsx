@@ -83,6 +83,7 @@ class RankingForm extends React.Component {
         </form>
       );
     }
+    return null;
   }
 
   renderDroppedFileName() {
@@ -94,6 +95,7 @@ class RankingForm extends React.Component {
         </p>
       );
     }
+    return null;
   }
 
   renderDropzone() {
