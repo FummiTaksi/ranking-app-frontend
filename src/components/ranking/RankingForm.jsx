@@ -17,7 +17,7 @@ class RankingForm extends React.Component {
       rankingFileBase64: undefined,
       rankingFileName: '',
       rankingName: '',
-      rankingDate: '',
+      rankingDate: new Date().toString(),
     };
     this.handleFormChange = this.handleFormChange.bind(this);
     this.onDrop = this.onDrop.bind(this);
@@ -54,6 +54,7 @@ class RankingForm extends React.Component {
   }
 
   handleFormChange(e) {
+    console.log('e.target.value', e.target.value);
     this.setState({
       [e.target.name]: e.target.value,
     });
