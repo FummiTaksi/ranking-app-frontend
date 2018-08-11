@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
+import PropTypes from 'prop-types';
 import { createRanking } from '../../reducers/rankingReducer';
 import Input from '../signin/Input';
 
@@ -39,12 +40,14 @@ class RankingForm extends React.Component {
 
   sendFile(e) {
     e.preventDefault();
+    const { rankingFileBase64, rankingName, rankingDate } = this.state;
     const credentials = {
-      rankingFileBase64: this.state.rankingFileBase64,
-      rankingName: this.state.rankingName,
-      rankingDate: this.state.rankingDate
+      rankingFileBase64,
+      rankingName,
+      rankingDate,
     };
-    this.props.createRanking(credentials);
+    const { createNewRanking } = this.props;
+    createNewRanking(credentials);
     this.setState({
       rankingFileBase64: undefined,
       rankingFileName: '',
@@ -60,21 +63,22 @@ class RankingForm extends React.Component {
   }
 
   renderUploadForm() {
-    if (this.state.rankingFileBase64) {
+    const { rankingFileBase64, rankingName, rankingDate } = this.state;
+    if (rankingFileBase64) {
       return (
         <form onSubmit={this.sendFile}>
           <Input
             type="input"
             text="Name of ranking:"
             name="rankingName"
-            value={this.state.rankingName}
+            value={rankingName}
             onChange={this.handleFormChange}
           />
           <Input
             type="date"
             text="Date of competition:"
             name="rankingDate"
-            value={this.state.rankingDate}
+            value={rankingDate}
             onChange={this.handleFormChange}
           />
           <button type="submit">
@@ -87,8 +91,9 @@ class RankingForm extends React.Component {
   }
 
   renderDroppedFileName() {
-    if (this.state.rankingFileBase64) {
-      const filenameText = `Filename: ${this.state.rankingFileName}`;
+    const { rankingFileBase64, rankingFileName } = this.state;
+    if (rankingFileBase64) {
+      const filenameText = `Filename: ${rankingFileName}`;
       return (
         <p>
           {filenameText}
@@ -132,7 +137,8 @@ class RankingForm extends React.Component {
   }
 
   render() {
-    const { admin } = this.props.credentials;
+    const { credentials } = this.props;
+    const { admin } = credentials;
     return (
       <div>
         {admin && this.renderFileUploadingForm()}
@@ -142,8 +148,13 @@ class RankingForm extends React.Component {
   }
 }
 
+RankingForm.propTypes = {
+  createNewRanking: PropTypes.func.isRequired,
+  credentials: PropTypes.object.isRequired,
+};
+
 const mapDispatchToProps = {
-  createRanking,
+  createNewRanking: createRanking,
 };
 
 const mapStateToProps = state => ({ credentials: state.login });

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Table } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 import { getRankings, deleteRanking } from '../../reducers/rankingReducer';
 
 const getTimeOfCompetition = (rankingObject) => {
@@ -16,11 +17,13 @@ const orderRankingsByDate = (rankings) => {
 
 class RankingList extends React.Component {
   async componentDidMount() {
-    await this.props.getRankings();
+    const { getAllRankings } = this.props;
+    await getAllRankings();
   }
 
   deleteRanking(rankingId) {
-    this.props.deleteRanking(rankingId);
+    const { deleteRankingById } = this.props;
+    deleteRankingById(rankingId);
   }
 
   deleteButton(rankingId) {
@@ -34,8 +37,10 @@ class RankingList extends React.Component {
   renderRankingCell(rankingObject) {
     const date = rankingObject.date.substring(0, 10);
     const linkToRanking = `/rankings/${rankingObject._id}`;
+    const { credentials } = this.props;
+    const admin = credentials ? credentials.admin : undefined;
     return (
-      <Table.Row key = {rankingObject._id}>
+      <Table.Row key={rankingObject._id}>
         <Table.Cell>
           <Link to={linkToRanking}>
             {' '}
@@ -49,15 +54,16 @@ class RankingList extends React.Component {
           {rankingObject.positions.length }
         </Table.Cell>
         <Table.Cell>
-          { this.props.credentials.admin && this.deleteButton(rankingObject._id)}
+          { admin && this.deleteButton(rankingObject._id)}
         </Table.Cell>
       </Table.Row>
     );
   }
 
   render() {
-    const rankings = this.props.ranking.allRankings;
-    if (this.props.ranking.loading) {
+    const { ranking } = this.props;
+    const { allRankings } = ranking;
+    if (ranking.loading) {
       return (
         <div className="ui segment">
           <div className="ui active inverted dimmer">
@@ -68,14 +74,14 @@ class RankingList extends React.Component {
         </div>
       );
     }
-    if (rankings.length === 0) {
+    if (allRankings.length === 0) {
       return (
         <p>
           No rankings saved to database yet
         </p>
       );
     }
-    const orderedRankings = orderRankingsByDate(rankings);
+    const orderedRankings = orderRankingsByDate(allRankings);
     return (
       <div>
         <h3>
@@ -97,7 +103,7 @@ class RankingList extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {orderedRankings.map(ranking => this.renderRankingCell(ranking))}
+            {orderedRankings.map(mapRanking => this.renderRankingCell(mapRanking))}
           </Table.Body>
         </Table>
       </div>
@@ -105,14 +111,21 @@ class RankingList extends React.Component {
   }
 }
 
+RankingList.propTypes = {
+  getAllRankings: PropTypes.func.isRequired,
+  deleteRankingById: PropTypes.func.isRequired,
+  credentials: PropTypes.object.isRequired,
+  ranking: PropTypes.object.isRequired,
+};
+
 const mapDispatchToProps = {
-  getRankings,
-  deleteRanking,
+  getAllRankings: getRankings,
+  deleteRankingById: deleteRanking,
 };
 
 const mapStateToProps = state => ({
   ranking: state.ranking,
-  credentials: state.login,
+  credentials: state.login.credentials,
 });
 
 const connectedRankingList = connect(mapStateToProps, mapDispatchToProps)(RankingList);
