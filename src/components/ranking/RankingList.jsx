@@ -38,7 +38,7 @@ class RankingList extends React.Component {
     const date = rankingObject.date.substring(0, 10);
     const linkToRanking = `/rankings/${rankingObject._id}`;
     const { credentials } = this.props;
-    const admin = credentials ? credentials.admin : undefined;
+    const { admin } = credentials;
     return (
       <Table.Row key={rankingObject._id}>
         <Table.Cell>
@@ -125,7 +125,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => ({
   ranking: state.ranking,
-  credentials: state.login.credentials,
+  credentials: state.login,
 });
 
 const connectedRankingList = connect(mapStateToProps, mapDispatchToProps)(RankingList);
