@@ -1,55 +1,54 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
-const renderPositionCell = (positionObject) => {
+const renderPositionCell = positionObject => (
+  <Table.Row key={positionObject._id}>
+    <Table.Cell>
+      {positionObject.position}
+    </Table.Cell>
+    <Table.Cell>
+      {positionObject.playerName}
+    </Table.Cell>
+    <Table.Cell>
+      {positionObject.clubName }
+    </Table.Cell>
+    <Table.Cell>
+      {positionObject.rating}
+    </Table.Cell>
+  </Table.Row>
+);
+
+function PositionList({ positions }) {
   return (
-    <Table.Row key={positionObject._id}>
-      <Table.Cell>
-        {positionObject.position}
-      </Table.Cell>
-      <Table.Cell>
-        {positionObject.playerName}
-      </Table.Cell>
-      <Table.Cell>
-        {positionObject.clubName }
-      </Table.Cell>
-      <Table.Cell>
-        {positionObject.rating}
-      </Table.Cell>
-    </Table.Row>
+    <div>
+      <Table>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>
+              Position
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              Player
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              Club
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              Rating
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <tbody>
+          {positions.map(position => renderPositionCell(position))}
+        </tbody>
+      </Table>
+    </div>
   );
-};
-
-class PositionList extends React.Component {
-  render() {
-    return (
-      <div>
-        <Table>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>
-                Position
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                Player
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                Club
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                Rating
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <tbody>
-            {this.props.positions.map((position) => {
-              return renderPositionCell(position)
-            })}
-          </tbody>
-        </Table>
-      </div>
-    );
-  }
 }
+
+PositionList.propTypes = {
+  positions: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default PositionList;
