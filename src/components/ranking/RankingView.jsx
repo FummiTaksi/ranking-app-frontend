@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 import { getRanking, deleteRanking } from '../../reducers/rankingReducer';
 import PositionList from './PositionList';
 
@@ -35,34 +36,38 @@ class RankingView extends React.Component {
   }
 
   componentDidMount() {
-    const rankingId = this.props.location.match.params.rankingId;
-    this.props.getRanking(rankingId);
+    const { location, getRankingById } = this.props;
+    const { rankingId } = location.match.params;
+    getRankingById(rankingId);
   }
 
   toggleLeft() {
+    const { selectedIndex } = this.state;
     this.setState({
-      selectedIndex: this.state.selectedIndex - 1,
+      selectedIndex: selectedIndex - 1,
     });
   }
 
   toggleRight() {
+    const { selectedIndex } = this.state;
     this.setState({
-      selectedIndex: this.state.selectedIndex + 1,
+      selectedIndex: selectedIndex + 1,
     });
   }
 
   renderNavigationButtons(listLength) {
+    const { selectedIndex } = this.state;
     return (
       <div id="navigationButtons">
         <Button
           onClick={this.toggleLeft}
-          disabled={this.state.selectedIndex === 0}
+          disabled={selectedIndex === 0}
         >
           <Icon name="angle double left" />
         </Button>
         <Button
           onClick={this.toggleRight}
-          disabled={this.state.selectedIndex === listLength - 1}
+          disabled={selectedIndex === listLength - 1}
         >
           <Icon name="angle double right" />
         </Button>
@@ -71,7 +76,8 @@ class RankingView extends React.Component {
   }
 
   render() {
-    if (this.props.ranking.loading) {
+    const { ranking } = this.props;
+    if (ranking.loading) {
       return (
         <div className="ui segment">
           <div className="ui active inverted dimmer">
@@ -82,8 +88,8 @@ class RankingView extends React.Component {
         </div>
       );
     }
-    const selectedRanking = this.props.ranking.selectedRanking;
-    if (!selectedRanking.positions) {
+    const { selectedRanking } = ranking;
+    if (!ranking.selectedRanking.positions) {
       return (
         <p>
           No ranking with this id!
@@ -93,7 +99,8 @@ class RankingView extends React.Component {
     const orderedPositions = orderPositions(selectedRanking);
     const orderedPositionGroups = orderPositionGroups(orderedPositions);
     const players = `${selectedRanking.competitionName}, players ${orderedPositions.length}`;
-    const pageInfo = `Showing page ${this.state.selectedIndex + 1 } / ${orderedPositionGroups.length}`;
+    const { selectedIndex } = this.state;
+    const pageInfo = `Showing page ${selectedIndex + 1} / ${orderedPositionGroups.length}`;
     return (
       <div>
         <h3>
@@ -103,7 +110,7 @@ class RankingView extends React.Component {
           {pageInfo}
         </h4>
         {this.renderNavigationButtons(orderedPositionGroups.length)}
-        <PositionList positions={orderedPositionGroups[this.state.selectedIndex]} />
+        <PositionList positions={orderedPositionGroups[selectedIndex]} />
         {this.renderNavigationButtons(orderedPositionGroups.length)}
       </div>
 
@@ -111,8 +118,14 @@ class RankingView extends React.Component {
   }
 }
 
+RankingView.propTypes = {
+  location: PropTypes.object.isRequired,
+  ranking: PropTypes.object.isRequired,
+  getRankingById: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = {
-  getRanking,
+  getRankingById: getRanking,
   deleteRanking,
 };
 
