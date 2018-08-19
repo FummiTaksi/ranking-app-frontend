@@ -18,7 +18,11 @@ function Notification({ notification }) {
   );
 }
 Notification.propTypes = {
-  notification: PropTypes.object.isRequired,
+  notification: PropTypes.shape({
+    icon: PropTypes.string,
+    header: PropTypes.string,
+    content: PropTypes.string,
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({

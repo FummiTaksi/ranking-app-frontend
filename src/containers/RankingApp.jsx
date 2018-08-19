@@ -128,7 +128,9 @@ Logout
 RankingApp.propTypes = {
   initUser: PropTypes.func.isRequired,
   logOut: PropTypes.func.isRequired,
-  credentials: PropTypes.object.isRequired,
+  credentials: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({

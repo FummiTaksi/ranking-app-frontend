@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { getRanking, deleteRanking } from '../../reducers/rankingReducer';
-import PositionList from './PositionList';
+import PositionList from '../../components/ranking/PositionList';
 
 const orderPositions = (selectedRanking) => {
   const copyList = selectedRanking.positions.slice();
@@ -89,7 +89,7 @@ class RankingView extends React.Component {
       );
     }
     const { selectedRanking } = ranking;
-    if (!ranking.selectedRanking.positions) {
+    if (!selectedRanking.positions) {
       return (
         <p>
           No ranking with this id!
@@ -119,8 +119,13 @@ class RankingView extends React.Component {
 }
 
 RankingView.propTypes = {
-  location: PropTypes.object.isRequired,
-  ranking: PropTypes.object.isRequired,
+  location: PropTypes.shape({
+    match: { params: { rankingId: PropTypes.string } },
+  }).isRequired,
+  ranking: PropTypes.shape({
+    loading: PropTypes.bool,
+    selectedRanking: { positions: PropTypes.array, competitionName: PropTypes.string },
+  }).isRequired,
   getRankingById: PropTypes.func.isRequired,
 };
 

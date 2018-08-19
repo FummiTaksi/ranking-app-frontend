@@ -114,8 +114,12 @@ class RankingList extends React.Component {
 RankingList.propTypes = {
   getAllRankings: PropTypes.func.isRequired,
   deleteRankingById: PropTypes.func.isRequired,
-  credentials: PropTypes.object.isRequired,
-  ranking: PropTypes.object.isRequired,
+  credentials: PropTypes.shape({
+    admin: PropTypes.bool,
+  }).isRequired,
+  ranking: PropTypes.shape({
+    allRankings: PropTypes.array,
+  }).isRequired,
 };
 
 const mapDispatchToProps = {

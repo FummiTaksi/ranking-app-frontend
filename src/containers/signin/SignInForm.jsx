@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Input from './Input';
+import PropTypes from 'prop-types';
+import Input from '../../components/form/Input';
 import { login } from '../../reducers/loginReducer';
 
 class SignInForm extends React.Component {
@@ -22,11 +23,8 @@ class SignInForm extends React.Component {
 
   logIn(e) {
     e.preventDefault();
-    const credentials = {
-      username: this.state.username,
-      password: this.state.password,
-    };
-    this.props.login(credentials);
+    const { logIn } = this.props;
+    logIn(this.state);
     this.setState({
       username: '',
       password: '',
@@ -34,6 +32,7 @@ class SignInForm extends React.Component {
   }
 
   render() {
+    const { username, password } = this.state;
     return (
       <div>
         <h2>
@@ -44,14 +43,14 @@ class SignInForm extends React.Component {
             type="input"
             text="Username:"
             name="username"
-            value={this.state.username}
+            value={username}
             onChange={this.handleFormChange}
           />
           <Input
             type="password"
             text="Password:"
             name="password"
-            value={this.state.password}
+            value={password}
             onChange={this.handleFormChange}
           />
           <button type="submit">
@@ -63,8 +62,13 @@ class SignInForm extends React.Component {
     );
   }
 }
+
+SignInForm.propTypes = {
+  logIn: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = {
-  login,
+  logIn: login,
 };
 
 const ConnectedSignInForm = connect(

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 import { createRanking } from '../../reducers/rankingReducer';
-import Input from '../signin/Input';
+import Input from '../../components/form/Input';
 
 const youAreNotAllowed = () => (
   <h3>
@@ -150,7 +150,9 @@ class RankingForm extends React.Component {
 
 RankingForm.propTypes = {
   createNewRanking: PropTypes.func.isRequired,
-  credentials: PropTypes.object.isRequired,
+  credentials: PropTypes.shape({
+    admin: PropTypes.bool,
+  }).isRequired,
 };
 
 const mapDispatchToProps = {
