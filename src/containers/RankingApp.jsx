@@ -12,6 +12,7 @@ import Notification from './notification/Notification';
 import RankingForm from './ranking/RankingForm';
 import RankingList from './ranking/RankingList';
 import RankingView from './ranking/RankingView';
+import PlayerList from './player/PlayerList';
 import HomePage from '../components/homepage/Homepage';
 
 import { logout, initCurrentUser } from '../reducers/loginReducer';
@@ -29,29 +30,6 @@ class RankingApp extends React.Component {
   componentDidMount() {
     const { initUser } = this.props;
     initUser();
-  }
-
-  viewForSignedInUser() {
-    return (
-      <div>
-        <Router>
-          <div>
-            <Menu>
-              {linkWithIcon('/', 'Home', 'home')}
-              {this.renderUploadLink()}
-              {linkWithIcon('/rankings', 'Rankings', 'ordered list')}
-              {this.logInOrLogOut()}
-            </Menu>
-            <Route exact path="/" render={() => <HomePage />} />
-            <Route exact path="/signin" render={() => <SignInForm />} />
-            <Route exact path="/upload" render={() => <RankingForm />} />
-            <Route exact path="/rankings" render={() => <RankingList />} />
-            <Route exact path="/rankings/:rankingId" render={location => <RankingView location={location} />} />
-          </div>
-        </Router>
-        <Notification />
-      </div>
-    );
   }
 
   logInOrLogOut() {
@@ -93,7 +71,24 @@ class RankingApp extends React.Component {
   render() {
     return (
       <div>
-        {this.viewForSignedInUser()}
+        <Router>
+          <div>
+            <Menu>
+              {linkWithIcon('/', 'Home', 'home')}
+              {linkWithIcon('/players', 'Players', 'id card')}
+              {this.renderUploadLink()}
+              {linkWithIcon('/rankings', 'Rankings', 'ordered list')}
+              {this.logInOrLogOut()}
+            </Menu>
+            <Route exact path="/" render={() => <HomePage />} />
+            <Route exact path="/signin" render={() => <SignInForm />} />
+            <Route exact path="/upload" render={() => <RankingForm />} />
+            <Route exact path="/rankings" render={() => <RankingList />} />
+            <Route exact path="/rankings/:rankingId" render={location => <RankingView location={location} />} />
+            <Route exact path="/players" render={() => <PlayerList />} />
+          </div>
+        </Router>
+        <Notification />
       </div>
     );
   }
