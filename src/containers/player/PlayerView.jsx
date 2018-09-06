@@ -54,7 +54,7 @@ PlayerView.propTypes = {
     error: PropTypes.bool,
     players: PropTypes.array,
     selectedPlayer: {
-      name: PropTypes.string, position: PropTypes.number, rating: PropTypes.number 
+      name: PropTypes.string, position: PropTypes.number, rating: PropTypes.number,
     },
   }).isRequired,
 };
