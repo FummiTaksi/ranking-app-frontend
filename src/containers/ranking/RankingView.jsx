@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { getRanking, deleteRanking } from '../../reducers/rankingReducer';
+import { getRanking } from '../../reducers/rankingReducer';
 import PositionList from '../../components/ranking/PositionList';
 
 const orderPositions = (selectedRanking) => {
@@ -124,6 +124,7 @@ RankingView.propTypes = {
   }).isRequired,
   ranking: PropTypes.shape({
     loading: PropTypes.bool,
+    allRankings: PropTypes.array,
     selectedRanking: { positions: PropTypes.array, competitionName: PropTypes.string },
   }).isRequired,
   getRankingById: PropTypes.func.isRequired,
@@ -131,12 +132,10 @@ RankingView.propTypes = {
 
 const mapDispatchToProps = {
   getRankingById: getRanking,
-  deleteRanking,
 };
 
 const mapStateToProps = state => ({
   ranking: state.ranking,
-  credentials: state.login,
 });
 
 const connectedRankingView = connect(mapStateToProps, mapDispatchToProps)(RankingView);

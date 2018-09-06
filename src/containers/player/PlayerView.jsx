@@ -52,7 +52,10 @@ PlayerView.propTypes = {
   player: PropTypes.shape({
     loading: PropTypes.bool,
     error: PropTypes.bool,
-    player: { name: PropTypes.string, position: PropTypes.number, rating: PropTypes.number },
+    players: PropTypes.array,
+    selectedPlayer: {
+      name: PropTypes.string, position: PropTypes.number, rating: PropTypes.number 
+    },
   }).isRequired,
 };
 
