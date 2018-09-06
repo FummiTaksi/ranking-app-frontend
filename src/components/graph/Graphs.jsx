@@ -1,7 +1,7 @@
 import React from 'react';
-import Graph from './Graph';
 import PropTypes from 'prop-types';
 
+import Graph from './Graph';
 
 const mapDates = positions => positions.map(position => position.date.substring(0, 10));
 
