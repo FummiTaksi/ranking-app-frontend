@@ -1,10 +1,16 @@
 import playerService from '../services/playerService';
 import { dispatchNotification } from './notificationReducer';
 
-const initialState = { players: [], loading: false, error: false };
+const initialState = {
+  players: [], selectedPlayer: undefined, loading: false, error: false,
+};
+
+const typeIsLoading = type => type === 'GETTING_PLAYERS' || type === 'GETTING_PLAYER';
+
+const typeIsError = type => type === 'GET_PLAYERS_FAILURE' || type === 'GET_PLAYER_FAILURE';
 
 const reducer = (store = initialState, action) => {
-  if (action.type === 'GETTING_PLAYERS') {
+  if (typeIsLoading(action.type)) {
     const newState = { ...store, loading: true, error: false };
     return newState;
   }
@@ -14,7 +20,13 @@ const reducer = (store = initialState, action) => {
     };
     return newState;
   }
-  if (action.type === 'GET_PLAYERS_FAILURE') {
+  if (action.type === 'GET_PLAYER_SUCCESS') {
+    const newState = {
+      ...store, selectedPlayer: action.content.player, loading: false, error: false,
+    };
+    return newState;
+  }
+  if (typeIsError(action.type)) {
     const newState = { ...store, loading: false, error: true };
     return newState;
   }
@@ -37,7 +49,6 @@ export const getPlayers = () => async (dispatch) => {
     });
     dispatchNotification(dispatch, { header, content, icon });
   } catch (error) {
-    console.log('error', error);
     const header = 'Error while fetching players';
     const content = 'Try again later';
     const icon = 'thumbs down';
@@ -48,4 +59,29 @@ export const getPlayers = () => async (dispatch) => {
   }
 };
 
+
+export const getPlayer = id => async (dispatch) => {
+  try {
+    dispatch({
+      type: 'GETTING_PLAYER',
+    });
+    const response = await playerService.getPlayer(id);
+    const header = `Player ${response.player.name} fetched successfully!`;
+    const content = '';
+    const icon = 'list ul';
+    dispatch({
+      type: 'GET_PLAYER_SUCCESS',
+      content: response,
+    });
+    dispatchNotification(dispatch, { header, content, icon });
+  } catch (error) {
+    const header = 'Error while fetching player';
+    const content = 'Try again later';
+    const icon = 'thumbs down';
+    dispatch({
+      type: 'GET_PLAYER_FAILURE',
+    });
+    dispatchNotification(dispatch, { header, content, icon });
+  }
+};
 export default reducer;

@@ -8,4 +8,10 @@ const getPlayers = async () => {
   return response.data;
 };
 
-export default { getPlayers };
+const getPlayer = async (id) => {
+  const url = `${baseUrl}/${id}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
+export default { getPlayers, getPlayer };

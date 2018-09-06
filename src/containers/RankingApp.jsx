@@ -13,6 +13,7 @@ import RankingForm from './ranking/RankingForm';
 import RankingList from './ranking/RankingList';
 import RankingView from './ranking/RankingView';
 import PlayerPage from './player/PlayerPage';
+import PlayerView from './player/PlayerView';
 import HomePage from '../components/homepage/Homepage';
 
 import { logout, initCurrentUser } from '../reducers/loginReducer';
@@ -86,6 +87,7 @@ class RankingApp extends React.Component {
             <Route exact path="/rankings" render={() => <RankingList />} />
             <Route exact path="/rankings/:rankingId" render={location => <RankingView location={location} />} />
             <Route exact path="/players" render={() => <PlayerPage />} />
+            <Route exact path="/players/:playerId" render={location => <PlayerView location={location} />} />
           </div>
         </Router>
         <Notification />

@@ -1,19 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Form, Input, Button, List,
-} from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { getPlayers } from '../../reducers/playerReducer';
 import Introduction from '../../components/player/Introduction';
+import FilterForm from '../../components/player/FilterForm';
+import PlayerList from '../../components/player/PlayerList';
 
-const renderPlayer = player => (
-  <List.Item key={player._id} id={player._id}>
-    {player.name}
-  </List.Item>
-);
-
-const nameContainsFilter = (player, filter) => player.name.toLowerCase().includes(filter);
+const nameContainsFilter = (name, filter) => name.toLowerCase().includes(filter.toLowerCase());
 
 class PlayerPage extends React.Component {
   constructor() {
@@ -26,28 +19,24 @@ class PlayerPage extends React.Component {
     this.filterPlayers = this.filterPlayers.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { getAllPlayers } = this.props;
-    getAllPlayers();
+    const { playerName } = this.state;
+    await getAllPlayers();
+    this.filterPlayers(playerName);
   }
 
   handleNameChange(e) {
     this.setState({
       playerName: e.target.value,
     });
+    this.filterPlayers(e.target.value);
   }
 
-  filterPlayers() {
-    const { playerName } = this.state;
-    if (playerName === '') {
-      this.setState({
-        filteredPlayers: [],
-      });
-    }
-    const filter = playerName.toLowerCase();
+  filterPlayers(filter) {
     const { player } = this.props;
     const { players } = player;
-    const filteredPlayers = players.filter(dbPlayer => nameContainsFilter(dbPlayer, filter));
+    const filteredPlayers = players.filter(dbPlayer => nameContainsFilter(dbPlayer.name, filter));
     this.setState({
       filteredPlayers,
     });
@@ -57,7 +46,10 @@ class PlayerPage extends React.Component {
     const { filteredPlayers } = this.state;
     const { length } = filteredPlayers;
     if (length === 0) {
-      return null;
+      return (
+        <h2>
+        No players found
+        </h2>);
     }
     return (
       <h2>
@@ -66,15 +58,9 @@ class PlayerPage extends React.Component {
     );
   }
 
-  renderFilteredPlayers() {
-    const { filteredPlayers } = this.state;
-    return filteredPlayers.map(player => renderPlayer(player));
-  }
-
-
   render() {
     const { player } = this.props;
-    if (player.loading) {
+    if (!player || player.loading) {
       return (
         <p>
           Please be patient :)
@@ -92,17 +78,9 @@ class PlayerPage extends React.Component {
     return (
       <div>
         <Introduction />
-        <Form onSubmit={this.filterPlayers}>
-          Name:
-          <Input type="text" onChange={this.handleNameChange} value={playerName} text="Name" />
-          <Button type="submit">
-            Search players
-          </Button>
-        </Form>
+        <FilterForm handleNameChange={this.handleNameChange} playerName={playerName} />
         {this.amountOfResults()}
-        <List>
-          {filteredPlayers.map(dbPlayer => renderPlayer(dbPlayer))}
-        </List>
+        <PlayerList players={filteredPlayers} />
       </div>
     );
   }

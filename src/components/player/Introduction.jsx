@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Header, Icon, Segment, Divider,
+  Header, Icon,
 } from 'semantic-ui-react';
 
 const Introduction = () => (
@@ -10,18 +10,13 @@ const Introduction = () => (
       <Header.Content>
         All rating data in one place
       </Header.Content>
+      <div className="sub header">
+       Filter players by writing players name, click players name to view statistics
+      </div>
+      <div className="sub header">
+        NOTE: Write surname before firstname
+      </div>
     </Header>
-    <Segment>
-        Filter players by writing name to search bar and clicking button,
-         then click player which ranking history you want to view
-      <Divider />
-        Note: Player names are stored in database surname first.
-        Examples for successfull searches for player which name is Matti Meikäläinen:
-      <Divider />
-      Meikäläinen, Meikäläinen Matti, Matti, Meikäl
-      <Divider />
-      TIP: Write either surname before firstname, or only firstname.
-    </Segment>
   </div>
 );
 
