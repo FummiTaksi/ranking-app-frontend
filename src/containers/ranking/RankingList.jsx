@@ -76,7 +76,7 @@ class RankingList extends React.Component {
     }
     if (allRankings.length === 0) {
       return (
-        <p>
+        <p id="noRankings">
           No rankings saved to database yet
         </p>
       );

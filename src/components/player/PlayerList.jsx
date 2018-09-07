@@ -13,7 +13,7 @@ const renderPlayer = player => (
 
 function PlayerList({ players }) {
   return (
-    <List>
+    <List id="playerList">
       {players.map(player => renderPlayer(player))}
     </List>
   );
