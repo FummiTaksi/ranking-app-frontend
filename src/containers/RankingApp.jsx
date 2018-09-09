@@ -38,7 +38,7 @@ class RankingApp extends React.Component {
     const { username } = credentials;
     if (username) {
       return (
-        <div>
+        <div id="loggedIn">
           <p>
             {`You are logged in as ${username} `}
           </p>
