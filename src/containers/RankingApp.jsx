@@ -42,7 +42,7 @@ class RankingApp extends React.Component {
           <p>
             {`You are logged in as ${username} `}
           </p>
-          <Button onClick={() => logOut()}>
+          <Button id="logOut" onClick={() => logOut()}>
             <Icon name="sign out alternate" />
             Logout
           </Button>
