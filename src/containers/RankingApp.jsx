@@ -14,7 +14,7 @@ import RankingList from './ranking/RankingList';
 import RankingView from './ranking/RankingView';
 import PlayerPage from './player/PlayerPage';
 import PlayerView from './player/PlayerView';
-import HomePage from '../components/homepage/Homepage';
+import AboutPage from '../components/about/Aboutpage';
 
 import { logout, initCurrentUser } from '../reducers/loginReducer';
 
@@ -75,18 +75,18 @@ class RankingApp extends React.Component {
         <Router>
           <div>
             <Menu>
-              {linkWithIcon('/', 'Home', 'home')}
-              {linkWithIcon('/players', 'Players', 'id card')}
+              {linkWithIcon('/', 'Players', 'id card')}
               {this.renderUploadLink()}
               {linkWithIcon('/rankings', 'Rankings', 'ordered list')}
+              {linkWithIcon('/about', 'About', 'question circle')}
               {this.logInOrLogOut()}
             </Menu>
-            <Route exact path="/" render={() => <HomePage />} />
+            <Route exact path="/about" render={() => <AboutPage />} />
             <Route exact path="/signin" render={() => <SignInForm />} />
             <Route exact path="/upload" render={() => <RankingForm />} />
             <Route exact path="/rankings" render={() => <RankingList />} />
             <Route exact path="/rankings/:rankingId" render={location => <RankingView location={location} />} />
-            <Route exact path="/players" render={() => <PlayerPage />} />
+            <Route exact path="/" render={() => <PlayerPage />} />
             <Route exact path="/players/:playerId" render={location => <PlayerView location={location} />} />
           </div>
         </Router>
