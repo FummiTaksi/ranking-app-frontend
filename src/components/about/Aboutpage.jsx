@@ -4,7 +4,7 @@ import {
 } from 'semantic-ui-react';
 
 const AboutPage = () => (
-  <div>
+  <div id="aboutPage">
     <Header as="h2" icon textAlign="center">
       <Icon name="table tennis" circular />
       <Header.Content>
