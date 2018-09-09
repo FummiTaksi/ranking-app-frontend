@@ -33,7 +33,7 @@ class PlayerView extends React.Component {
     }
     const sorted = sortPositionsByDate(selectedPlayer.positions);
     return (
-      <div>
+      <div id="playerView">
         <h2>
           {`Statistics of ${selectedPlayer.name}`}
         </h2>
