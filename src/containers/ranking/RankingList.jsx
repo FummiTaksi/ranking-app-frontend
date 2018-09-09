@@ -83,7 +83,7 @@ class RankingList extends React.Component {
     }
     const orderedRankings = orderRankingsByDate(allRankings);
     return (
-      <div>
+      <div id="rankingList">
         <h3>
           {`Here are all ${orderedRankings.length} rankings that are uploaded to this site`}
         </h3>
