@@ -6,7 +6,6 @@
     "axios": "^0.18.0",
     "chart.js": "^2.7.2",
     "dropzone": "^5.5.1",
-    "eslint": "^4.19.1",
     "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-chartjs-2": "^2.7.4",
