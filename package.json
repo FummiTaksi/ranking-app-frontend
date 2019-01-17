@@ -30,7 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "NODE_ENV=test react-scripts test --env=jsdom --coverage",
-    "lint": "eslint --ext .js,.jsx src services tests reducers",
+    "lint": "eslint --ext .js,.jsx src",
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:3001"
