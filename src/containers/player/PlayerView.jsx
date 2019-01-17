@@ -5,7 +5,11 @@ import PropTypes from 'prop-types';
 import { getPlayer } from '../../reducers/playerReducer';
 import Graphs from '../../components/graph/Graphs';
 
-const sortPositionsByDate = positions => positions.sort((a, b) => a.date > b.date);
+const sortPositionsByDate = positions => positions.sort((a, b) => {
+  const dateA = new Date(a.date);
+  const dateB = new Date(b.date);
+  return dateA.getTime() - dateB.getTime();
+});
 
 class PlayerView extends React.Component {
   componentDidMount() {
