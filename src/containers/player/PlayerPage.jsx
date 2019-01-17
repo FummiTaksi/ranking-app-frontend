@@ -47,9 +47,7 @@ class PlayerPage extends React.Component {
     const { length } = filteredPlayers;
     if (length === 0) {
       return (
-        <h2>
-        No players found
-        </h2>);
+        <h2>No players found</h2>);
     }
     return (
       <h2>
