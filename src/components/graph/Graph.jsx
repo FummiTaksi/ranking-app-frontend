@@ -3,7 +3,7 @@ import { Line } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 
 function Graph({
-  header, label, labels, data,
+  header, label, labels, data, options,
 }) {
   const lineData = {
     labels,
@@ -36,7 +36,7 @@ function Graph({
       <h2>
         {header}
       </h2>
-      <Line data={lineData} />
+      <Line data={lineData} options={options} />
     </div>
   );
 }
@@ -46,6 +46,15 @@ Graph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
   header: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  options: PropTypes.shape({
+    scale: PropTypes.shape({
+      yAxes: PropTypes.shape({
+        ticks: PropTypes.shape({
+          reverse: PropTypes.shape({ reverse: PropTypes.bool.isRequired }),
+        }),
+      }),
+    }),
+  }).isRequired,
 };
 
 export default Graph;

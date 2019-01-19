@@ -13,6 +13,25 @@ function Graphs({ positions }) {
   const dates = mapDates(positions);
   const ratings = mapRatings(positions);
   const onlyPositions = mapPositions(positions);
+  const reverse = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          reverse: true,
+        },
+      }],
+    },
+  };
+
+  const normal = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          reverse: false,
+        },
+      }],
+    },
+  };
 
   return (
     <div>
@@ -21,12 +40,14 @@ function Graphs({ positions }) {
         data={ratings}
         header="Rating over time"
         label="Rating"
+        options={normal}
       />
       <Graph
         labels={dates}
         data={onlyPositions}
         header="Position in mens ranking over time"
         label="Position"
+        options={reverse}
       />
     </div>
   );
