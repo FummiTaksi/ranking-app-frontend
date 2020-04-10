@@ -18,10 +18,10 @@ From the root of the repository
 npm test
 ```
 
-## RUN TESTS
+## RUN LOCALLY
 
 From the root of the repository
 
 ```
-npm test
+npm start
 ```
